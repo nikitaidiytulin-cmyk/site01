@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Python-автоматизация: профессиональный онлайн-курс по созданию исполняемых скриптов, ботов, парсеров и автоматизации бизнес-процессов.">
+  <meta name="theme-color" content="#050a0f">
+  <title>PyAuto — Python Автоматизация: Курс</title>
+
+  <!-- Favicon (SVG inline as data URI) -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23050a0f'/><text x='4' y='24' font-size='22'>🐍</text></svg>">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Orbitron:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ═══ LOADING SCREEN ═══ -->
+<div id="loading-screen">
+  <div class="loading-logo">🐍 PYAUTO</div>
+  <div class="loading-bar-wrap"><div class="loading-bar"></div></div>
+  <div class="loading-text">ИНИЦИАЛИЗАЦИЯ СРЕДЫ...</div>
+</div>
+
+<!-- ═══ BACKGROUND ═══ -->
+<canvas id="bg-canvas"></canvas>
+
+<!-- ═══ NAVBAR ═══ -->
+<nav class="navbar" role="navigation">
+  <a href="index.html" class="nav-brand">
+    <span class="nav-brand-icon">🐍</span>
+    PYAUTO
+  </a>
+
+  <ul class="nav-links" id="nav-links" role="list">
+    <li><a href="index.html" class="active">Главная</a></li>
+    <li><a href="#about">О курсе</a></li>
+    <li><a href="#program">Программа</a></li>
+    <li><a href="lectures.html">Лекции</a></li>
+    <li><a href="practice.html">Практика</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="lectures.html" class="nav-cta">Начать курс →</a></li>
+  </ul>
+
+  <button class="hamburger" id="hamburger" aria-label="Меню" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+
+  <div class="nav-progress"></div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero" id="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-radial"></div>
+
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span class="hero-badge-dot"></span>
+      НОВЫЙ НАБОР · ПОТОК 2024
+    </div>
+
+    <h1 class="hero-title">
+      <span class="hero-title-line1">Python-</span><br>
+      <span class="hero-title-line2">Автоматизация</span>
+    </h1>
+
+    <p class="hero-subtitle">
+      Создавай скрипты, которые работают <strong>без тебя</strong>. 
+      Автоматизируй файлы, Excel, API, парсинг, боты — и упакуй всё в готовое приложение.
+    </p>
+
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <span class="hero-stat-num">6</span>
+        <span class="hero-stat-label">лекций</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-num">8</span>
+        <span class="hero-stat-label">проектов</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-num">40+</span>
+        <span class="hero-stat-label">часов</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-num">500+</span>
+        <span class="hero-stat-label">студентов</span>
+      </div>
+    </div>
+
+    <div class="hero-buttons">
+      <a href="lectures.html" class="btn btn-primary">
+        <i class="fas fa-play"></i> Начать обучение
+      </a>
+      <a href="#program" class="btn btn-secondary">
+        <i class="fas fa-list"></i> Программа курса
+      </a>
+      <a href="practice.html" class="btn btn-outline">
+        <i class="fas fa-code"></i> Практика
+      </a>
+    </div>
+  </div>
+
+  <!-- Hero Terminal Widget -->
+  <div class="hero-terminal" aria-hidden="true">
+    <div class="terminal-header">
+      <div class="terminal-dots">
+        <div class="terminal-dot td-red"></div>
+        <div class="terminal-dot td-yellow"></div>
+        <div class="terminal-dot td-green"></div>
+      </div>
+      <span class="terminal-title">python — bash — zsh</span>
+    </div>
+    <div class="terminal-body">
+      <div id="hero-terminal-output"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ STATS BAR ═══ -->
+<div class="stats-bar">
+  <div class="stats-bar-inner">
+    <div class="stat-item">
+      <span class="stat-num" data-target="500" data-suffix="+">0+</span>
+      <span class="stat-label">Студентов</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num" data-target="95" data-suffix="%">0%</span>
+      <span class="stat-label">Довольны курсом</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num" data-target="40" data-suffix="ч">0ч</span>
+      <span class="stat-label">Видео и теории</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num" data-target="150" data-suffix="+">0+</span>
+      <span class="stat-label">Примеров кода</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num" data-target="8" data-suffix="">0</span>
+      <span class="stat-label">Практических проектов</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ ABOUT ═══ -->
+<section class="section" id="about">
+  <div class="section-inner">
+    <div class="section-label">/ о курсе</div>
+    <h2 class="section-title fade-in">Что ты получишь<br><span class="text-accent">после курса</span></h2>
+    <p class="section-desc fade-in">Практический курс для тех, кто хочет перестать делать рутину вручную и научить Python работать вместо себя — 24/7, без ошибок.</p>
+
+    <div class="about-grid">
+      <div class="about-card fade-in">
+        <span class="about-icon">⚡</span>
+        <h3>Реальные скрипты</h3>
+        <p>Ты создашь 8 настоящих Python-проектов, которые сразу можно запустить на своей работе или фрилансе.</p>
+      </div>
+      <div class="about-card fade-in">
+        <span class="about-icon">🔧</span>
+        <h3>Полный стек инструментов</h3>
+        <p>openpyxl, pandas, selenium, requests, pyinstaller, python-telegram-bot и ещё 20+ библиотек с нуля до продакшна.</p>
+      </div>
+      <div class="about-card fade-in">
+        <span class="about-icon">🤖</span>
+        <h3>Боты и планировщики</h3>
+        <p>Telegram-боты, cron-задачи, email-автоматизация и скрипты, работающие в фоне без твоего участия.</p>
+      </div>
+      <div class="about-card fade-in">
+        <span class="about-icon">📦</span>
+        <h3>Исполняемые .exe</h3>
+        <p>Запакуй любой скрипт в Windows-приложение с помощью PyInstaller — без Python у пользователя.</p>
+      </div>
+      <div class="about-card fade-in">
+        <span class="about-icon">🌐</span>
+        <h3>Парсинг и API</h3>
+        <p>BeautifulSoup, Selenium, REST API, JSON, авторизация, токены — собирай и обрабатывай любые данные из интернета.</p>
+      </div>
+      <div class="about-card fade-in">
+        <span class="about-icon">🎓</span>
+        <h3>Сертификат</h3>
+        <p>По окончании курса и сдаче дипломного проекта ты получишь именной сертификат о прохождении курса.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PROGRAM ═══ -->
+<section class="section" id="program" style="background: rgba(0,255,136,0.02);">
+  <div class="section-inner">
+    <div class="section-label">/ программа</div>
+    <h2 class="section-title fade-in">6 модулей — от основ<br><span class="text-accent">до production</span></h2>
+    <p class="section-desc fade-in">Каждый модуль — это полноценная лекция с теорией, кодом, примерами и домашним заданием.</p>
+
+    <div class="program-grid">
+
+      <a href="lectures.html#lecture-1" class="lecture-card fade-in">
+        <div class="lecture-num">ЛЕКЦИЯ 01</div>
+        <div class="lecture-title">Основы Python для автоматизации</div>
+        <ul class="lecture-topics">
+          <li>Переменные, функции, циклы, условия</li>
+          <li>Модули и пакеты</li>
+          <li>Virtual Environment + pip</li>
+          <li>Организация проекта</li>
+          <li>Логирование (logging)</li>
+        </ul>
+        <div class="lecture-meta">
+          <span class="lecture-tag tag-green">Основы</span>
+          <span class="lecture-tag tag-cyan">6 часов</span>
+          <span class="lecture-tag tag-yellow">8 примеров</span>
+        </div>
+      </a>
+
+      <a href="lectures.html#lecture-2" class="lecture-card fade-in">
+        <div class="lecture-num">ЛЕКЦИЯ 02</div>
+        <div class="lecture-title">Автоматизация файлов и папок</div>
+        <ul class="lecture-topics">
+          <li>os, shutil, pathlib</li>
+          <li>Переименование и сортировка файлов</li>
+          <li>Мониторинг директорий (watchdog)</li>
+          <li>Архивация ZIP, TAR</li>
+          <li>Работа с PDF и CSV</li>
+        </ul>
+        <div class="lecture-meta">
+          <span class="lecture-tag tag-green">Файлы</span>
+          <span class="lecture-tag tag-cyan">7 часов</span>
+          <span class="lecture-tag tag-yellow">10 примеров</span>
+        </div>
+      </a>
+
+      <a href="lectures.html#lecture-3" class="lecture-card fade-in">
+        <div class="lecture-num">ЛЕКЦИЯ 03</div>
+        <div class="lecture-title">Excel и Google Sheets автоматизация</div>
+        <ul class="lecture-topics">
+          <li>openpyxl, pandas, xlsxwriter</li>
+          <li>Создание таблиц и диаграмм</li>
+          <li>Автоматические отчёты с формулами</li>
+          <li>Стилизация Excel</li>
+          <li>Google Sheets API</li>
+        </ul>
+        <div class="lecture-meta">
+          <span class="lecture-tag tag-purple">Excel</span>
+          <span class="lecture-tag tag-cyan">6 часов</span>
+          <span class="lecture-tag tag-yellow">9 примеров</span>
+        </div>
+      </a>
+
+      <a href="lectures.html#lecture-4" class="lecture-card fade-in">
+        <div class="lecture-num">ЛЕКЦИЯ 04</div>
+        <div class="lecture-title">Парсинг сайтов и работа с API</div>
+        <ul class="lecture-topics">
+          <li>requests + BeautifulSoup</li>
+          <li>Selenium WebDriver</li>
+          <li>REST API, JSON, OAuth</li>
+          <li>Антибот-защита и обходы</li>
+          <li>Работа с токенами и заголовками</li>
+        </ul>
+        <div class="lecture-meta">
+          <span class="lecture-tag tag-cyan">Парсинг</span>
+          <span class="lecture-tag tag-cyan">8 часов</span>
+          <span class="lecture-tag tag-yellow">12 примеров</span>
+        </div>
+      </a>
+
+      <a href="lectures.html#lecture-5" class="lecture-card fade-in">
+        <div class="lecture-num">ЛЕКЦИЯ 05</div>
+        <div class="lecture-title">Боты и автоматизация процессов</div>
+        <ul class="lecture-topics">
+          <li>Telegram-боты с python-telegram-bot</li>
+          <li>Cron + Task Scheduler</li>
+          <li>Email автоматизация (smtplib)</li>
+          <li>Background scripts (daemon)</li>
+          <li>Логирование ошибок в файл</li>
+        </ul>
+        <div class="lecture-meta">
+          <span class="lecture-tag tag-yellow">Боты</span>
+          <span class="lecture-tag tag-cyan">7 часов</span>
+          <span class="lecture-tag tag-yellow">11 примеров</span>
+        </div>
+      </a>
+
+      <a href="lectures.html#lecture-6" class="lecture-card fade-in">
+        <div class="lecture-num">ЛЕКЦИЯ 06</div>
+        <div class="lecture-title">Создание .exe и деплой</div>
+        <ul class="lecture-topics">
+          <li>PyInstaller — сборка .exe</li>
+          <li>Автозапуск + реестр Windows</li>
+          <li>Docker-контейнеры для скриптов</li>
+          <li>Деплой на Linux VPS</li>
+          <li>CI/CD через GitHub Actions</li>
+        </ul>
+        <div class="lecture-meta">
+          <span class="lecture-tag tag-green">Деплой</span>
+          <span class="lecture-tag tag-cyan">6 часов</span>
+          <span class="lecture-tag tag-yellow">8 примеров</span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SKILLS ═══ -->
+<section class="section" id="skills">
+  <div class="section-inner">
+    <div class="section-label">/ навыки</div>
+    <h2 class="section-title fade-in">Что ты будешь<br><span class="text-accent">уметь делать</span></h2>
+    <p class="section-desc fade-in">После курса твоё резюме пополнится реальными навыками автоматизации</p>
+
+    <div class="skills-grid">
+      <div class="skill-chip fade-in" data-tooltip="Язык программирования">
+        <span class="skill-chip-icon">🐍</span>
+        <span class="skill-chip-name">Python 3.12</span>
+      </div>
+      <div class="skill-chip fade-in" data-tooltip="Анализ данных">
+        <span class="skill-chip-icon">🐼</span>
+        <span class="skill-chip-name">pandas</span>
+      </div>
+      <div class="skill-chip fade-in" data-tooltip="Браузерная автоматизация">
+        <span class="skill-chip-icon">🕷️</span>
+        <span class="skill-chip-name">Selenium</span>
+      </div>
+      <div class="skill-chip fade-in" data-tooltip="HTTP-запросы">
+        <span class="skill-chip-icon">🌐</span>
+        <span class="skill-chip-name">requests</span>
+      </div>
+      <div class="skill-chip fade-in" data-tooltip="Excel автоматизация">
+        <span class="skill-chip-icon">📊</span>
+        <span class="skill-chip-name">openpyxl</span>
+      </div>
+      <div class="skill-chip fade-in" data-tooltip="Парсинг HTML">
+        <span class="skill-chip-icon">🍲</span>
+        <span class="skill-chip-name">BeautifulSoup</span>
+      </div>
+      <div class="skill-chip fade-in" data-tooltip="Telegram боты">
+        <span class="skill-chip-icon">🤖</span>
+        <span class="skill-chip-name">aiogram / PTB</span>
+      </div>
+      <div class="skill-chip fade-in" data-tooltip="Сборка приложений">
+        <span class="skill-chip-icon">📦</span>
+        <span class="skill-chip-name">PyInstaller</span>
+      </div>
+      <div class="skill-chip fade-in" data-tooltip="Контейнеры">
+        <span class="skill-chip-icon">🐳</span>
+        <span class="skill-chip-name">Docker</span>
+      </div>
+      <div class="skill-chip fade-in" data-tooltip="Версионирование">
+        <span class="skill-chip-icon">🐙</span>
+        <span class="skill-chip-name">Git + GitHub</span>
+      </div>
+      <div class="skill-chip fade-in" data-tooltip="CI/CD пайплайны">
+        <span class="skill-chip-icon">⚙️</span>
+        <span class="skill-chip-name">GitHub Actions</span>
+      </div>
+      <div class="skill-chip fade-in" data-tooltip="Работа с файлами">
+        <span class="skill-chip-icon">📁</span>
+        <span class="skill-chip-name">pathlib / os</span>
+      </div>
+      <div class="skill-chip fade-in" data-tooltip="Email автоматизация">
+        <span class="skill-chip-icon">📧</span>
+        <span class="skill-chip-name">smtplib</span>
+      </div>
+      <div class="skill-chip fade-in" data-tooltip="Планировщик задач">
+        <span class="skill-chip-icon">⏰</span>
+        <span class="skill-chip-name">schedule / cron</span>
+      </div>
+      <div class="skill-chip fade-in" data-tooltip="Логирование">
+        <span class="skill-chip-icon">📝</span>
+        <span class="skill-chip-name">logging</span>
+      </div>
+      <div class="skill-chip fade-in" data-tooltip="VPS сервера">
+        <span class="skill-chip-icon">🖥️</span>
+        <span class="skill-chip-name">Linux / VPS</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TOOLS ═══ -->
+<section class="section" style="background: rgba(0,255,136,0.02);" id="tools">
+  <div class="section-inner">
+    <div class="section-label">/ инструменты</div>
+    <h2 class="section-title fade-in">Инструменты <span class="text-accent">курса</span></h2>
+
+    <div class="tools-grid">
+      <div class="tool-card fade-in">
+        <div class="tool-logo">🐍</div>
+        <div class="tool-info">
+          <h4>Python 3.12</h4>
+          <p>Основной язык курса. Актуальная версия с новыми возможностями</p>
+        </div>
+      </div>
+      <div class="tool-card fade-in">
+        <div class="tool-logo">📓</div>
+        <div class="tool-info">
+          <h4>VS Code</h4>
+          <p>IDE с плагинами Python, Git, Docker. Настройка рабочего окружения</p>
+        </div>
+      </div>
+      <div class="tool-card fade-in">
+        <div class="tool-logo">🐼</div>
+        <div class="tool-info">
+          <h4>pandas 2.x</h4>
+          <p>DataFrame для анализа и трансформации больших таблиц данных</p>
+        </div>
+      </div>
+      <div class="tool-card fade-in">
+        <div class="tool-logo">🕷️</div>
+        <div class="tool-info">
+          <h4>Selenium 4</h4>
+          <p>Браузерная автоматизация, скрейпинг динамических сайтов</p>
+        </div>
+      </div>
+      <div class="tool-card fade-in">
+        <div class="tool-logo">🤖</div>
+        <div class="tool-info">
+          <h4>python-telegram-bot</h4>
+          <p>Создание Telegram-ботов с командами, клавиатурами и inline-режимом</p>
+        </div>
+      </div>
+      <div class="tool-card fade-in">
+        <div class="tool-logo">📦</div>
+        <div class="tool-info">
+          <h4>PyInstaller</h4>
+          <p>Упаковка Python-скрипта в standalone .exe без зависимостей</p>
+        </div>
+      </div>
+      <div class="tool-card fade-in">
+        <div class="tool-logo">🐳</div>
+        <div class="tool-info">
+          <h4>Docker</h4>
+          <p>Контейнеризация скриптов для запуска на любом сервере</p>
+        </div>
+      </div>
+      <div class="tool-card fade-in">
+        <div class="tool-logo">⚙️</div>
+        <div class="tool-info">
+          <h4>GitHub Actions</h4>
+          <p>Автоматический запуск скриптов по расписанию или по событию</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ROADMAP ═══ -->
+<section class="section" id="roadmap">
+  <div class="section-inner">
+    <div class="section-label">/ roadmap</div>
+    <h2 class="section-title fade-in">План <span class="text-accent">обучения</span></h2>
+    <p class="section-desc fade-in">Структурированный путь от новичка до автоматизатора за 6 недель</p>
+
+    <div class="roadmap-track">
+      <div class="roadmap-item fade-in">
+        <div class="roadmap-week">НЕДЕЛЯ 01</div>
+        <h3>Фундамент Python</h3>
+        <p>Переменные, функции, модули, pip, venv. Пишем первый автоматический скрипт — создаём структуру папок проекта одной командой.</p>
+      </div>
+      <div class="roadmap-item fade-in">
+        <div class="roadmap-week">НЕДЕЛЯ 02</div>
+        <h3>Власть над файловой системой</h3>
+        <p>os, pathlib, shutil. Автоматическая сортировка файлов по расширению, дате, размеру. Бэкапы и архивация с логом выполнения.</p>
+      </div>
+      <div class="roadmap-item fade-in">
+        <div class="roadmap-week">НЕДЕЛЯ 03</div>
+        <h3>Excel и данные</h3>
+        <p>Опanexl, pandas, xlsxwriter. Генератор ежедневных Excel-отчётов из CSV. Диаграммы, формулы, стилизация — всё программно.</p>
+      </div>
+      <div class="roadmap-item fade-in">
+        <div class="roadmap-week">НЕДЕЛЯ 04</div>
+        <h3>Парсинг и интеграции</h3>
+        <p>Парсим реальный интернет-магазин, интегрируемся с внешними API, получаем данные с обходом ботозащиты.</p>
+      </div>
+      <div class="roadmap-item fade-in">
+        <div class="roadmap-week">НЕДЕЛЯ 05</div>
+        <h3>Боты и планировщики</h3>
+        <p>Telegram-бот с кнопками и командами. Email-рассылки. Cron на Linux, Task Scheduler на Windows. Скрипт работает 24/7.</p>
+      </div>
+      <div class="roadmap-item fade-in">
+        <div class="roadmap-week">НЕДЕЛЯ 06</div>
+        <h3>Production и дипломный проект</h3>
+        <p>PyInstaller: превращаем скрипт в .exe. Docker на VPS. CI/CD. Дипломный проект: полная система автоматизации бизнеса.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CASES ═══ -->
+<section class="section" style="background: rgba(0,255,136,0.02);" id="cases">
+  <div class="section-inner">
+    <div class="section-label">/ кейсы</div>
+    <h2 class="section-title fade-in">Реальные сценарии <span class="text-accent">автоматизации</span></h2>
+
+    <div class="cases-grid">
+      <div class="case-card fade-in">
+        <div class="case-badge">ФИНАНСЫ</div>
+        <h3>📊 Автоматический финансовый отчёт</h3>
+        <p>Скрипт каждое утро читает CSV-выгрузки из банка, формирует Excel-сводку с диаграммами и отправляет на почту руководителю.</p>
+        <div class="case-impact">⚡ Экономия: 3 часа в день → 65 000 руб./мес.</div>
+      </div>
+
+      <div class="case-card fade-in">
+        <div class="case-badge">ECOMMERCE</div>
+        <h3>🛒 Мониторинг цен конкурентов</h3>
+        <p>Парсер раз в час обходит 5 сайтов конкурентов, сравнивает цены, и при снижении цены — мгновенно присылает Telegram-уведомление.</p>
+        <div class="case-impact">📈 Увеличение продаж на 23% за счёт оперативного реагирования</div>
+      </div>
+
+      <div class="case-card fade-in">
+        <div class="case-badge">HR</div>
+        <h3>👥 Автоматическая обработка резюме</h3>
+        <p>Скрипт сканирует входящие письма на HR-почте, скачивает PDF-резюме, извлекает данные и заполняет Excel-таблицу кандидатов.</p>
+        <div class="case-impact">⚡ 200 резюме обрабатывается за 4 минуты вместо 8 часов</div>
+      </div>
+
+      <div class="case-card fade-in">
+        <div class="case-badge">ЛОГИСТИКА</div>
+        <h3>📦 Генерация накладных и актов</h3>
+        <p>Из Google Sheets читает заказы, автоматически заполняет Word/PDF шаблоны документов и отправляет клиентам по email.</p>
+        <div class="case-impact">🔄 500 документов в час без участия сотрудника</div>
+      </div>
+
+      <div class="case-card fade-in">
+        <div class="case-badge">SMM</div>
+        <h3>📱 Автопостинг в социальные сети</h3>
+        <p>Selenium-скрипт по расписанию заходит в аккаунты ВКонтакте/Instagram*, публикует посты из очереди и отмечает выполненные.</p>
+        <div class="case-impact">🕐 Публикации в 3:00 AM без участия SMM-щика</div>
+      </div>
+
+      <div class="case-card fade-in">
+        <div class="case-badge">IT / DEVOPS</div>
+        <h3>🖥️ Мониторинг серверов</h3>
+        <p>Скрипт каждую минуту проверяет доступность сервисов, нагрузку CPU/RAM. При превышении порогов — алерт в Telegram-канал команды.</p>
+        <div class="case-impact">🚨 Время реакции на инцидент: с 45 мин → 3 мин</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TESTIMONIALS ═══ -->
+<section class="section" id="reviews">
+  <div class="section-inner">
+    <div class="section-label">/ отзывы</div>
+    <h2 class="section-title fade-in">Что говорят <span class="text-accent">студенты</span></h2>
+
+    <div class="testimonials-grid">
+      <div class="testimonial-card fade-in">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">«Наконец-то нашёл курс, где всё объясняется через реальные задачи. Написал скрипт на работе — автоматизировал сборку ежемесячных отчётов. Начальник в шоке. Теперь у меня есть 2 свободных часа каждый день.»</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">АМ</div>
+          <div>
+            <div class="testimonial-name">Алексей М.</div>
+            <div class="testimonial-role">бухгалтер → python-автоматизатор</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card fade-in">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">«Лекция по Selenium и парсингу — просто огонь. Написал парсер интернет-магазина конкурентов за выходные. Теперь каждое утро получаю Excel с ценами в Telegram. Это реально меняет бизнес.»</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">ДК</div>
+          <div>
+            <div class="testimonial-name">Дмитрий К.</div>
+            <div class="testimonial-role">предприниматель, ecommerce</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card fade-in">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">«Дипломный проект дался тяжело, но результат — полная система автоматизации CRM-процессов. Telegram-бот принимает заявки, Python их обрабатывает, Excel-отчёт уходит менеджерам. Горжусь собой!»</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">МС</div>
+          <div>
+            <div class="testimonial-name">Мария С.</div>
+            <div class="testimonial-role">HR-менеджер, Москва</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card fade-in">
+        <div class="testimonial-stars">★★★★☆</div>
+        <p class="testimonial-text">«Отличный курс для тех, кто уже знает базовый Python. Лекция по Docker и деплою реально изменила моё понимание "как запустить скрипт на сервере". Раньше боялся VPS — теперь это мой лучший друг.»</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">РА</div>
+          <div>
+            <div class="testimonial-name">Роман А.</div>
+            <div class="testimonial-role">junior backend developer</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card fade-in">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">«Я работаю в логистике. Скрипт из Лекции 2 изменил мою жизнь — теперь накладные генерируются автоматически. Уволился с основной работы и теперь продаю Python-автоматизацию как услугу клиентам.»</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">ЕВ</div>
+          <div>
+            <div class="testimonial-name">Евгений В.</div>
+            <div class="testimonial-role">фрилансер, автоматизация 1С</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card fade-in">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">«Telegram-бот из Лекции 5 сначала казался магией, а теперь я написала уже три. Один принимает заказы в кондитерской, второй отвечает на вопросы клиентов, третий уведомляет о складе. Спасибо за курс!»</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">НТ</div>
+          <div>
+            <div class="testimonial-name">Наташа Т.</div>
+            <div class="testimonial-role">владелица малого бизнеса</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FAQ ═══ -->
+<section class="section" style="background: rgba(0,255,136,0.02);" id="faq">
+  <div class="section-inner">
+    <div class="section-label">/ faq</div>
+    <h2 class="section-title fade-in">Часто задаваемые <span class="text-accent">вопросы</span></h2>
+
+    <div class="faq-list fade-in">
+
+      <div class="faq-item">
+        <button class="faq-question">
+          Нужен ли опыт программирования для курса?
+          <i class="fas fa-chevron-down faq-chevron"></i>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Базовое знание Python будет плюсом, но не обязательным условием. В Лекции 1 мы разбираем все нужные основы с нуля. Если ты умеешь открыть терминал и запустить <code>python script.py</code> — ты уже готов. Главное — желание автоматизировать и разбираться в коде.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          Какая ОС нужна? Работает на Mac/Linux?
+          <i class="fas fa-chevron-down faq-chevron"></i>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Курс ведётся на Windows 10/11, но все примеры кода адаптированы под кросс-платформенную работу. Для Mac и Linux мы даём примечания с различиями. Лекция по Docker позволяет запускать скрипты на любой ОС через контейнеры.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          Сколько времени уйдёт на прохождение курса?
+          <i class="fas fa-chevron-down faq-chevron"></i>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Оптимальный темп — 1 лекция в неделю с практическим заданием. При 2-3 часах в день ты пройдёшь курс за 6 недель. Ты можешь идти быстрее или медленнее — материалы доступны без ограничений по времени.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          Практические задания — это проверяется или просто для себя?
+          <i class="fas fa-chevron-down faq-chevron"></i>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Все 8 практических заданий имеют подробные критерии оценки с баллами. Дипломный проект — финальная работа, которую нужно сдать для получения сертификата. Остальные задания — для самопроверки, но мы рекомендуем делать все — это реальный опыт.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          Могу ли я использовать написанный код в коммерческих проектах?
+          <i class="fas fa-chevron-down faq-chevron"></i>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Да, весь код курса — твоя собственность. Ты можешь использовать, модифицировать и продавать скрипты из курса. Мы специально проектируем практические задания как реальные бизнес-кейсы, которые можно сразу применять в работе.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          Как получить сертификат?
+          <i class="fas fa-chevron-down faq-chevron"></i>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Для получения сертификата необходимо: пройти все 6 лекций, выполнить минимум 6 из 8 практических заданий, и сдать финальный дипломный проект — «Полная система автоматизации бизнес-процесса» (Задание 8). Сертификат выдаётся в PDF-формате с уникальным номером.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CERTIFICATE ═══ -->
+<section class="section" id="certificate">
+  <div class="section-inner">
+    <div class="section-label">/ сертификат</div>
+    <h2 class="section-title fade-in" style="text-align:center;">Твой <span class="text-accent">сертификат</span></h2>
+
+    <div class="cert-showcase fade-in">
+      <div class="cert-badge-large">🏆</div>
+      <div class="cert-title-main">СЕРТИФИКАТ СПЕЦИАЛИСТА</div>
+      <div style="font-family:var(--font-display);font-size:1.1rem;color:var(--text-primary);margin-bottom:4px;letter-spacing:1px;">Python Automation Engineer</div>
+      <div class="cert-subtitle">Выдаётся студентам, успешно завершившим курс<br>«Python-автоматизация: разработка исполняемых скриптов»</div>
+
+      <div class="cert-features">
+        <span class="cert-feature"><i class="fas fa-check"></i> Подтверждённые навыки</span>
+        <span class="cert-feature"><i class="fas fa-check"></i> Уникальный номер</span>
+        <span class="cert-feature"><i class="fas fa-check"></i> PDF-формат</span>
+        <span class="cert-feature"><i class="fas fa-check"></i> Для LinkedIn и резюме</span>
+        <span class="cert-feature"><i class="fas fa-check"></i> Без срока действия</span>
+      </div>
+
+      <div style="margin-top:32px;">
+        <a href="lectures.html" class="btn btn-primary">
+          <i class="fas fa-graduation-cap"></i> Начать и получить сертификат
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">🐍 PYAUTO COURSE</div>
+      <p class="footer-desc">Профессиональный курс Python-автоматизации. Создавай скрипты, которые работают вместо тебя — 24/7, без ошибок, без выходных.</p>
+    </div>
+    <div class="footer-links">
+      <a href="index.html">Главная</a>
+      <a href="lectures.html">Лекции</a>
+      <a href="practice.html">Практика</a>
+      <a href="#faq">FAQ</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2024 PyAuto Course · Все права защищены</p>
+    <p class="font-code text-muted">v2.0.0 · Python 3.12 · Made with ❤️ and 🐍</p>
+  </div>
+</footer>
+
+<!-- Progress Widget -->
+<div class="progress-widget" role="complementary" aria-label="Прогресс чтения">
+  <div class="pw-label">ПРОГРЕСС ЧТЕНИЯ</div>
+  <div class="pw-bar-wrap"><div class="pw-bar" style="width:0%"></div></div>
+  <div class="pw-text">0% изучено</div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
